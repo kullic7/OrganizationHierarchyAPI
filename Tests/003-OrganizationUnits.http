@@ -1,0 +1,63 @@
+### Get all organization units
+## TEST-EXPECT-STATUS: [200]
+GET http://localhost:5000/api/organization-units
+
+
+### Get organization unit by id
+## TEST-EXPECT-STATUS: [200]
+GET http://localhost:5000/api/organization-units/1
+
+
+### Get organization tree for company 1
+## TEST-EXPECT-STATUS: [200]
+GET http://localhost:5000/api/organization-units/company/1/tree
+
+
+### Create valid division under company unit
+## TEST-EXPECT-STATUS: [201]
+POST http://localhost:5000/api/organization-units
+Content-Type: application/json
+
+{
+  "companyId": 1,
+  "parentId": 1,
+  "managerId": 2,
+  "name": "TeaPie Division",
+  "code": "TEAPIE-DIV",
+  "type": 2
+}
+
+
+### Create invalid project without division parent
+## TEST-EXPECT-STATUS: [400]
+POST http://localhost:5000/api/organization-units
+Content-Type: application/json
+
+{
+  "companyId": 1,
+  "parentId": 1,
+  "managerId": 2,
+  "name": "Invalid Project",
+  "code": "INVALID-PROJECT",
+  "type": 3
+}
+
+
+### Create invalid unit with manager from another company
+## TEST-EXPECT-STATUS: [400]
+POST http://localhost:5000/api/organization-units
+Content-Type: application/json
+
+{
+  "companyId": 1,
+  "parentId": 1,
+  "managerId": 5,
+  "name": "Invalid Manager Division",
+  "code": "INVALID-MANAGER-DIV",
+  "type": 2
+}
+
+
+### Delete organization unit with children - should fail
+## TEST-EXPECT-STATUS: [400]
+DELETE http://localhost:5000/api/organization-units/1
