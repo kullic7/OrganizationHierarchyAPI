@@ -50,6 +50,7 @@ namespace OrganizationAPI.Services
 		}
 		public async Task<EmployeeGetDto> CreateAsync(EmployeeInputDto dto)
 		{
+			ValidateInput(dto);
 			var companyExists = await _dbContext.Companies.AnyAsync(c => c.Id == dto.CompanyId);
 			if (!companyExists)
 				throw new ArgumentException("Company does not exist.");
@@ -81,6 +82,7 @@ namespace OrganizationAPI.Services
 
 		public async Task<bool> UpdateAsync(int id, EmployeeInputDto dto)
 		{
+			ValidateInput(dto);
 			var employee = await _dbContext.Employees.FindAsync(id);
 			if (employee == null)
 				return false;
@@ -119,6 +121,20 @@ namespace OrganizationAPI.Services
 			await _dbContext.SaveChangesAsync();
 
 			return true;
+		}
+		private static void ValidateInput(EmployeeInputDto dto)
+		{
+			if (string.IsNullOrWhiteSpace(dto.FirstName))
+				throw new ArgumentException("First name is required.");
+
+			if (string.IsNullOrWhiteSpace(dto.LastName))
+				throw new ArgumentException("Last name is required.");
+
+			if (string.IsNullOrWhiteSpace(dto.Phone))
+				throw new ArgumentException("Phone is required.");
+
+			if (string.IsNullOrWhiteSpace(dto.Email))
+				throw new ArgumentException("Email is required.");
 		}
 	}
 }
