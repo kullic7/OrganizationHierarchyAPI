@@ -62,12 +62,6 @@ This command automatically:
 
 # API Documentation
 
-Base URL:
-
-```text
-http://localhost:5000
-```
-
 Scalar API documentation:
 
 ```text
