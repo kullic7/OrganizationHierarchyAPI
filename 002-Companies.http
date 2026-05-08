@@ -1,0 +1,35 @@
+### Get all companies
+## TEST-EXPECT-STATUS: [200]
+GET http://localhost:5000/api/companies
+
+
+### Get company by id
+## TEST-EXPECT-STATUS: [200]
+GET http://localhost:5000/api/companies/1
+
+
+### Create company
+## TEST-EXPECT-STATUS: [201]
+POST http://localhost:5000/api/companies
+Content-Type: application/json
+
+{
+  "name": "TeaPie Company",
+  "code": "TEAPIE"
+}
+
+
+### Create invalid company - missing name
+## TEST-EXPECT-STATUS: [400]
+POST http://localhost:5000/api/companies
+Content-Type: application/json
+
+{
+  "name": "",
+  "code": "BAD-COMPANY"
+}
+
+
+### Delete existing company with employees/units - should fail
+## TEST-EXPECT-STATUS: [400]
+DELETE http://localhost:5000/api/companies/1

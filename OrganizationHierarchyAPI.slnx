@@ -3,5 +3,10 @@
     <File Path=".env" />
     <File Path="docker-compose.yml" />
   </Folder>
+  <Folder Name="/Tests/">
+    <File Path="001-Employees.http" />
+    <File Path="002-Companies.http" />
+    <File Path="003-OrganizationUnits.http" />
+  </Folder>
   <Project Path="OrganizationAPI/OrganizationAPI.csproj" />
 </Solution>

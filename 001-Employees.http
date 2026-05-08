@@ -1,0 +1,38 @@
+### Get all employees
+## TEST-EXPECT-STATUS: [200]
+GET http://localhost:5000/api/employees
+
+
+### Create employee
+## TEST-EXPECT-STATUS: [201]
+POST http://localhost:5000/api/employees
+Content-Type: application/json
+
+{
+  "companyId": 1,
+  "title": "Ing.",
+  "firstName": "TeaPie",
+  "lastName": "Tester",
+  "phone": "+421900999999",
+  "email": "teapie.tester@example.com"
+}
+
+
+### Update employee
+## TEST-EXPECT-STATUS: [204]
+PUT http://localhost:5000/api/employees/1
+Content-Type: application/json
+
+{
+  "companyId": 1,
+  "title": "Mgr.",
+  "firstName": "Updated",
+  "lastName": "Employee",
+  "phone": "+421900111222",
+  "email": "updated@example.com"
+}
+
+
+### Delete employee which is manager
+## TEST-EXPECT-STATUS: [400]
+DELETE http://localhost:5000/api/employees/1
